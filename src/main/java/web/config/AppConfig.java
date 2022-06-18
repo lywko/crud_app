@@ -37,13 +37,14 @@ public class AppConfig {
     public DataSource getDataSource() throws SQLException {
 
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        DriverManager.registerDriver(new com.mysql.jdbc.Driver ());
+        DriverManager.registerDriver(new com.mysql.jdbc.Driver());
         dataSource.setDriverClassName(env.getProperty("db.driver"));
         dataSource.setUrl(env.getProperty("db.url"));
         dataSource.setUsername(env.getProperty("db.username"));
         dataSource.setPassword(env.getProperty("db.password"));
         return dataSource;
     }
+
     private Properties hibernateProperties() {
         Properties properties = new Properties();
         properties.put("hibernate.show_sql", env.getRequiredProperty("hibernate.show_sql"));

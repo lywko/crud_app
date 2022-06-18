@@ -11,35 +11,34 @@ import java.util.List;
 @Repository
 public class UserDAOImpl implements UserDAO {
 
-
     @PersistenceContext
     private EntityManager entityManager;
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<User> index() {
-
+    public List<User> getUsers() {
         Query query = entityManager.createQuery("from User");
         return query.getResultList();
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public User show (int id) {
+    public User getUserById(int id) {
         return (entityManager.find(User.class, id));
     }
 
     @Override
-    public void save (User user) {
+    public void saveUser(User user) {
         entityManager.persist(user);
     }
 
     @Override
-    public void update (User user) {
+    public void updateUser(User user) {
         entityManager.merge(user);
     }
 
     @Override
-    public void delete (User user) { entityManager.remove(user);
+    public void deleteUser(User user) {
+        entityManager.remove(user);
     }
 }

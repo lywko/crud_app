@@ -8,42 +8,51 @@ import web.model.User;
 import web.service.UserService;
 
 
-
 @Controller
+@RequestMapping("/")
 public class UserController {
+    private final UserService userService;
+
     @Autowired
-    private UserService userService;
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
 
     @GetMapping("/")
     public String showAll(Model model) {
-        model.addAttribute("index", userService.index());
-        System.out.println(userService.index());
+        model.addAttribute("index", userService.getUsers());
+        System.out.println(userService.getUsers());
         return "index";
     }
+
     @GetMapping("/add")
     public String getUser() {
         return "add";
     }
+
     @PostMapping("/add")
     public String add(@ModelAttribute("addUser") User user) {
-        userService.save(user);
+        userService.saveUser(user);
         return "redirect:/";
     }
+
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable("id") int id, Model model) {
-        model.addAttribute("edit", userService.show(id));
+        model.addAttribute("edit", userService.getUserById(id));
         return "edit";
     }
+
     @PostMapping("/edit/{id}")
     public String update(@ModelAttribute("edit") User user) {
-        userService.update(user);
+        userService.updateUser(user);
         return "redirect:/";
     }
-    @GetMapping("/delete/{id}")
+
+    @DeleteMapping("/delete/{id}")
     public String delete(@PathVariable("id") int id) {
-        User user=userService.show(id);
-        userService.delete(user);
+        User user = userService.getUserById(id);
+        userService.deleteUser(user);
         return "redirect:/";
     }
 }

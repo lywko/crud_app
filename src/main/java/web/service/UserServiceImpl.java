@@ -11,43 +11,42 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
+@Transactional
 public class UserServiceImpl implements UserService {
     @PersistenceContext
     private EntityManager entityManager;
 
+    private final UserDAO userDao;
+
     @Autowired
-    private UserDAO userDao;
+    public UserServiceImpl(UserDAO userDao) {
+        this.userDao = userDao;
+    }
 
     @Override
-    @Transactional
-    public List<User> index() {
-
-        return userDao.index();
+    public List<User> getUsers() {
+        return userDao.getUsers();
 
     }
 
     @Override
-    @Transactional
-    public User show (int id) {
-        return (entityManager.find(User.class,id));
+    public User getUserById(int id) {
+        return (entityManager.find(User.class, id));
     }
 
     @Override
-    @Transactional
-    public void save (User user) {
-        userDao.save(user);
+    public void saveUser(User user) {
+        userDao.saveUser(user);
     }
 
     @Override
-    @Transactional
-    public void update (User user) {
-        userDao.update(user);
+    public void updateUser(User user) {
+        userDao.updateUser(user);
     }
 
     @Override
-    @Transactional
-    public void delete (User user) {
-        entityManager.remove(entityManager.find(User.class,user.getId()));
+    public void deleteUser(User user) {
+        entityManager.remove(entityManager.find(User.class, user.getId()));
     }
 
 
