@@ -11,7 +11,6 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
-@Transactional
 public class UserServiceImpl implements UserService {
     @PersistenceContext
     private EntityManager entityManager;
@@ -35,16 +34,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public void saveUser(User user) {
         userDao.saveUser(user);
     }
 
     @Override
+    @Transactional
     public void updateUser(User user) {
         userDao.updateUser(user);
     }
 
     @Override
+    @Transactional
     public void deleteUser(User user) {
         entityManager.remove(entityManager.find(User.class, user.getId()));
     }
